@@ -16,11 +16,20 @@ const romanNumerals = {
     1: 'I'
 };
 
+/**
+ * convertToRoman takes an integer and returns a Roman numeral equivalent
+ * @param {*} num - only integers
+ * @returns a roman numeral equivalent of the num passed to the function
+ */
 function convertToRoman(num) {
     // Iterate through the romanNumerals object and print keys to console.
     for (const numeral in romanNumerals) {
         console.log(numeral);
     }
+
+    // get the magnitude of num
+    const mag = String(num).length - 1;
+    console.log(`Magnitude of ${num} is ${mag}`)
 
     return num;
 }
