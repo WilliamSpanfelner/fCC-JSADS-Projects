@@ -17,7 +17,12 @@ const romanNumerals = {
 };
 
 function convertToRoman(num) {
+    // Iterate through the romanNumerals object and print keys to console.
+    for (const numeral in romanNumerals) {
+        console.log(numeral);
+    }
+
     return num;
 }
 
-convertToRoman(36);
+console.log(convertToRoman(36));
