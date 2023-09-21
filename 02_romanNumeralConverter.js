@@ -32,12 +32,18 @@ function convertToRoman(num) {
     // 3. Add balance variable to account for changes
     let balance = num;
 
-    // Iterate through the romanNumerals object and print keys to console.
-    for (const numeral in romanNumerals) {
-        console.log(numeral);
+    // 4. Store the largest object property compared to balance
+    let largestArabicKeys = [];
+    // 5. Iterate through the romanNumerals object to find largest keys.
+    for (const arabicNum in romanNumerals) {
+        if (balance >= arabicNum) {
+            largestArabicKeys.push(arabicNum);
+        }
     }
+    
+    console.log(largestArabicKeys, Math.max(...largestArabicKeys));
 
-    return num;
+    return romanNumeral + " " + num;
 }
 
 console.log(convertToRoman(36));
