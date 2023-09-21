@@ -40,10 +40,16 @@ function convertToRoman(num) {
             largestArabicKeys.push(arabicNum);
         }
     }
-    
-    console.log(largestArabicKeys, Math.max(...largestArabicKeys));
 
-    return romanNumeral + " " + num;
+    // 6. Update romanNumeral
+    let largestArabicValue = Math.max(...largestArabicKeys);
+    romanNumeral += romanNumerals[largestArabicValue];
+    console.log(largestArabicKeys, largestArabicValue);
+
+    // 7. Update balance
+    balance -= largestArabicValue;
+    
+    return romanNumeral + " " + balance + " " + num;
 }
 
 const testData = [3000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1, 36, 38, 360, 39];
