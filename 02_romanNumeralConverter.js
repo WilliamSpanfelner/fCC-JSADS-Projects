@@ -46,4 +46,5 @@ function convertToRoman(num) {
     return romanNumeral + " " + num;
 }
 
-console.log(convertToRoman(36));
+const testData = [3000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1, 36, 38, 360, 39];
+console.log(convertToRoman(testData[0]));
