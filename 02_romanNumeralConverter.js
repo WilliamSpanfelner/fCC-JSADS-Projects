@@ -22,6 +22,9 @@ const romanNumerals = {
  * @returns a roman numeral equivalent of the num passed to the function
  */
 function convertToRoman(num) {
+    // The num passed in will become an equivalent romanNumeral string
+    let romanNumeral = ""; 
+
     // Iterate through the romanNumerals object and print keys to console.
     for (const numeral in romanNumerals) {
         console.log(numeral);
