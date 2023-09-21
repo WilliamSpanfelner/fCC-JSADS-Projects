@@ -27,8 +27,8 @@ function convertToRoman(num) {
     let romanNumeral = ""; 
 
     // 2. Get the largest factor of 10 for num
-    let exp = String(num).length - 1;
-    console.log(`Magnitude of ${num} is ${exp}`)
+    // let exp = String(num).length - 1;
+    // console.log(`Magnitude of ${num} is ${exp}`)
     
     // 3. Add balance variable to account for changes
     let balance = num;
@@ -47,7 +47,7 @@ function convertToRoman(num) {
         // 6. Update romanNumeral
         let largestArabicValue = Math.max(...largestArabicKeys);
         romanNumeral += romanNumerals[largestArabicValue];
-        console.log(largestArabicKeys, largestArabicValue);
+        // console.log(largestArabicKeys, largestArabicValue);
     
         // 7. Update balance
         balance -= largestArabicValue;
@@ -56,5 +56,8 @@ function convertToRoman(num) {
     return romanNumeral + " " + balance + " " + num;
 }
 
-const testData = [3000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1, 36, 38, 360, 39];
-console.log(convertToRoman(testData[0]));
+const testData = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1, 36, 38, 360, 49];
+
+for (const i in testData) {
+    console.log(convertToRoman(testData[i]));
+}
