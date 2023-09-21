@@ -29,6 +29,9 @@ function convertToRoman(num) {
     let exp = String(num).length - 1;
     console.log(`Magnitude of ${num} is ${exp}`)
     
+    // 3. Add balance variable to account for changes
+    let balance = num;
+
     // Iterate through the romanNumerals object and print keys to console.
     for (const numeral in romanNumerals) {
         console.log(numeral);
