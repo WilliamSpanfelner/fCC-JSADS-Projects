@@ -21,24 +21,31 @@ function rot13(str) {
     let decodedStr = "";
     // Iterate through the string and log the Unicode for chars to console
     for (i = 0; i < str.length; i++) {
-        const letter = str[i];
-        const letterUnicode = str.charCodeAt(i);
+        const character = str[i];
+        const characterUnicode = str.charCodeAt(i);
         // Add non-alphabetic characters to the decodedStr without further processing
-        if (letterUnicode < 65 || letterUnicode > 90) {
-            decodedStr += letter;
+        if (characterUnicode < 65 || characterUnicode > 90) {
+            decodedStr += character;
         } else {
             // Subtract 13 from chars to decode and build decodedStr
-            let newCharCode = letterUnicode - 13;
+            let newCharCode = characterUnicode - 13;
+
+            // Characters A-Z have unicodes 65...90
             if (newCharCode < 65) {
-                console.log("This is a char < A");
+                let offScaleAmt = 65 - newCharCode;
+                let adjustedCharCode = 91 - offScaleAmt;
+                decodedStr += String.fromCharCode(adjustedCharCode);
+                console.log("This is a char < A", offScaleAmt, adjustedCharCode, newCharCode % 26, String.fromCharCode(adjustedCharCode));
+            } else {
+                decodedStr += String.fromCharCode(newCharCode);
             }
-            const decodedUnicode = String.fromCharCode(letterUnicode - 13);
-            console.log(letter, letterUnicode, letterUnicode - 13, decodedUnicode);
+            const decodedUnicode = String.fromCharCode(characterUnicode - 13);
+            console.log(character, characterUnicode, characterUnicode - 13, decodedUnicode);
         }
     }
-    console.log(decodedStr + "*");
+    console.log(decodedStr += "*");
     return decodedStr
 }
 
 const testData = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ ,", "SERR PBQR PNZC"]
-rot13(testData[0][27])
+rot13(testData[1][5])
