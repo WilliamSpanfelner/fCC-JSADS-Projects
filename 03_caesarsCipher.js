@@ -20,8 +20,13 @@ function rot13(str) {
     // Print letters to console
     for (const letter in str) {
         let char = str[letter];
-        console.log(char);
+        console.log(char, char.charCodeAt[letter]);
     }
+    // Iterate through the string and log the Unicode for chars to console
+    for (i = 0; i < str.length; i++) {
+        console.log(str[i], str.charCodeAt(i));
+    }
+    
 
     return str
 }
