@@ -24,22 +24,21 @@ function rot13(str) {
         const character = str[i];
         const characterUnicode = str.charCodeAt(i);
         
-        if (65 <= characterUnicode <= 90) {            
-            // Subtract 13 from chars to decode and build decodedStr
-            let newCharCode = characterUnicode - 13;
-
-            // Characters A-Z have unicodes 65...90
-            if (newCharCode < 65) {
-                let offScaleAmt = 65 - newCharCode;
-                let adjustedCharCode = 91 - offScaleAmt;
-                decodedStr += String.fromCharCode(adjustedCharCode);
-                // console.log("This is a char < A", offScaleAmt, adjustedCharCode, newCharCode % 26, String.fromCharCode(adjustedCharCode));
-            } else {
-                decodedStr += String.fromCharCode(newCharCode);
-            }
-        } else {
+        if (characterUnicode < 65 || characterUnicode > 90) {
             // Add non-alphabetic characters to the decodedStr without further processing
-            decodedStr += character;
+            decodedStr += character;            
+        } else {
+            /* Exploit the power of the remainder operator and the fact
+            that the alphabet is 26 characters and unicode values for A-Z 
+            are 65 - 90.  Taking the remainder of 65 (A) gives 13 (e.g. 65 - 26 * 2 = 65 - 52 = 13).
+            In order to decode messages using this cipher, 13 must be subtracted.
+            If we consider that 13 is 26 / 2, taking the remainder 26 of any 
+            regular character code effectively shifts the normalized starting
+            code of the alphabet to the middle (i.e. character A has value 13 
+            and N has value 0.  So simple adding 65 to all of the remainder 26
+            values decodes the encrypted message.*/
+            let newCharCode = characterUnicode % 26 + 65;
+            decodedStr += String.fromCharCode(newCharCode);
         }
     }
     return decodedStr
@@ -52,4 +51,4 @@ const testData = [
     "SERR YBIR?",
     "GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."
     ]
-console.log(rot13(testData[2]));
+console.log(rot13(testData[3]));
