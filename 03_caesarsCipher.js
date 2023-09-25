@@ -20,13 +20,11 @@ function rot13(str) {
     // Empty string to build decoded string
     let decodedStr = "";
     // Iterate through the string and log the Unicode for chars to console
-    for (i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
         const character = str[i];
         const characterUnicode = str.charCodeAt(i);
-        // Add non-alphabetic characters to the decodedStr without further processing
-        if (characterUnicode < 65 || characterUnicode > 90) {
-            decodedStr += character;
-        } else {
+        
+        if (65 <= characterUnicode <= 90) {            
             // Subtract 13 from chars to decode and build decodedStr
             let newCharCode = characterUnicode - 13;
 
@@ -35,17 +33,23 @@ function rot13(str) {
                 let offScaleAmt = 65 - newCharCode;
                 let adjustedCharCode = 91 - offScaleAmt;
                 decodedStr += String.fromCharCode(adjustedCharCode);
-                console.log("This is a char < A", offScaleAmt, adjustedCharCode, newCharCode % 26, String.fromCharCode(adjustedCharCode));
+                // console.log("This is a char < A", offScaleAmt, adjustedCharCode, newCharCode % 26, String.fromCharCode(adjustedCharCode));
             } else {
                 decodedStr += String.fromCharCode(newCharCode);
             }
-            const decodedUnicode = String.fromCharCode(characterUnicode - 13);
-            console.log(character, characterUnicode, characterUnicode - 13, decodedUnicode);
+        } else {
+            // Add non-alphabetic characters to the decodedStr without further processing
+            decodedStr += character;
         }
     }
-    console.log(decodedStr += "*");
     return decodedStr
 }
 
-const testData = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ ,", "SERR PBQR PNZC"]
-rot13(testData[1][5])
+const testData = [
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ ,", 
+    "SERR PBQR PNZC", 
+    "SERR CVMMN!", 
+    "SERR YBIR?",
+    "GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."
+    ]
+console.log(rot13(testData[2]));
