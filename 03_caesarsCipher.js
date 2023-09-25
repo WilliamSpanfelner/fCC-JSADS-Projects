@@ -17,7 +17,14 @@ them on.
 */
 
 function rot13(str) {
+    // Print letters to console
+    for (const letter in str) {
+        let char = str[letter];
+        console.log(char);
+    }
+
     return str
 }
 
-rot13("SERR PBQR PNZC")
+const testData = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "SERR PBQR PNZC"]
+rot13(testData[0])
