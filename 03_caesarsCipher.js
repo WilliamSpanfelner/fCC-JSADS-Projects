@@ -21,11 +21,24 @@ function rot13(str) {
     let decodedStr = "";
     // Iterate through the string and log the Unicode for chars to console
     for (i = 0; i < str.length; i++) {
-        console.log(str[i], str.charCodeAt(i));
+        const letter = str[i];
+        const letterUnicode = str.charCodeAt(i);
+        // Add non-alphabetic characters to the decodedStr without further processing
+        if (letterUnicode < 65 || letterUnicode > 90) {
+            decodedStr += letter;
+        } else {
+            // Subtract 13 from chars to decode and build decodedStr
+            let newCharCode = letterUnicode - 13;
+            if (newCharCode < 65) {
+                console.log("This is a char < A");
+            }
+            const decodedUnicode = String.fromCharCode(letterUnicode - 13);
+            console.log(letter, letterUnicode, letterUnicode - 13, decodedUnicode);
+        }
     }
-
-    return str
+    console.log(decodedStr + "*");
+    return decodedStr
 }
 
-const testData = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "SERR PBQR PNZC"]
-rot13(testData[0])
+const testData = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ ,", "SERR PBQR PNZC"]
+rot13(testData[0][27])
