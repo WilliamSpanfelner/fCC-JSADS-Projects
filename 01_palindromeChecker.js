@@ -13,15 +13,22 @@ function palindrome(str) {
     // remove white space
     const stringWithNoWhiteSpace = stringInLowerCase.split(/\s/).join('');
     // remove punctuation
-    const alphanumerics = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
-                            'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
-                            'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', 
-                            '4', '5', '6', '7', '8', '9']
-
+    // const alphanumerics = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
+    //                         'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
+    //                         'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', 
+    //                         '4', '5', '6', '7', '8', '9'];
+    const regex = /[a-z0-9]/;
     let cleanString = '';
+    // for (const letter of stringWithNoWhiteSpace) {
+    //     if (alphanumerics.includes(letter)) {
+    //         cleanString += letter;
+    //     }
+    // }
+
+    // Using regex to get the same result as above
     for (const letter of stringWithNoWhiteSpace) {
-        if (alphanumerics.includes(letter)) {
-            cleanString += letter;
+        if (regex.test(letter)) {
+            cleanString += letter
         }
     }
     
