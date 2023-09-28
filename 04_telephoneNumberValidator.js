@@ -27,7 +27,11 @@ string is a valid US phone number; otherwise return false.
 function telephoneCheck(str) {
     // Define regex - 
     // const regex = /\d{10}/;  // matches strings 10 digits in length
-    const regex = /\d{3}(\s|\-)\d{3}\1\d{4}/; // matches strings with 2 groups of 3 digits and a space or hyphen and a final 4 digits
+    // const regex = /\d{3}(\s|\-)\d{3}\1\d{4}/; // matches strings with 2 groups of 3 digits and a space or hyphen and a final 4 digits
+    
+    // Combining the above regexes with the or operator gets more matches
+    const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/; 
+
     
     console.log(str.match(regex));
 
