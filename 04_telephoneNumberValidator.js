@@ -26,7 +26,9 @@ string is a valid US phone number; otherwise return false.
 
 function telephoneCheck(str) {
     // Define regex - 
-    const regex = /\d{10}/;  // matches strings 10 digits in length
+    // const regex = /\d{10}/;  // matches strings 10 digits in length
+    const regex = /\d{3}(\s|\-)\d{3}\1\d{4}/; // matches strings with 2 groups of 3 digits and a space or hyphen and a final 4 digits
+    
     console.log(str.match(regex));
 
     // return test boolean
@@ -36,16 +38,22 @@ function telephoneCheck(str) {
 // telephonCheck("555-555-5555")
 
 const testData = [
+    '800-692-7753',
     '555-555-5555',
     '(555)555-5555',
     '(555) 555-5555',
     '555 555 5555',
     '5555555555',
     '1 555 555 5555',
-    '800-692-7753',
     '8oo-six427676;laskdjf'
 ];
+let matchCount = 0;
 for (const item of testData) {
-    console.log(item, telephoneCheck(item)); //);
+    let returnedBool = telephoneCheck(item)
+    console.log(item, returnedBool);
+    if (returnedBool) {
+        matchCount++;
+    }
 }
-// console.log(telephoneCheck(testData[]));
+console.log(matchCount, testData.length, matchCount / testData.length);
+// console.log(telephoneCheck(testData[1]));
