@@ -25,6 +25,13 @@ function palindrome(str) {
         }
     }
     
+    // Another way of writing the conditional to acheive same result
+    // for (const letter of stringWithNoWhiteSpace) {
+    //     if (alphanumerics.indexOf(letter) > -1) {
+    //         cleanString += letter;
+    //     }
+    // }
+
     // testString = "12345"
     function reverseString(n) {
         if (n < 0) {
@@ -46,7 +53,7 @@ function palindrome(str) {
     return cleanString == reversedString;
 }
 
-palindromes = [
+const palindromes = [
     "Fred",
     "hello",
     "E Y  E",
@@ -60,6 +67,10 @@ palindromes = [
     "2A3 3a2",
     "2_A3*3#A2"
 ]
-for (let i = 0; i < palindromes.length; i++) {
-    console.log(i, palindrome(palindromes[i]));
+// for (let i = 0; i < palindromes.length; i++) {
+//     console.log(i, palindromes[i], palindrome(palindromes[i]));
+// }
+// Another more readable way of writing the above for-loop
+for (const word in palindromes) {
+    console.log(word, palindromes[word], palindrome(palindromes[word]));
 }
