@@ -24,8 +24,13 @@ confirm that the country code is 1. Return true if the
 string is a valid US phone number; otherwise return false.
 */
 
-function telephonCheck(str) {
-    return true;
+function telephoneCheck(str) {
+    // Define regex - 
+    const regex = /\d{10}/;  // matches strings 10 digits in length
+    console.log(str.match(regex));
+
+    // return test boolean
+    return regex.test(str);
 }
 
 // telephonCheck("555-555-5555")
@@ -36,7 +41,11 @@ const testData = [
     '(555) 555-5555',
     '555 555 5555',
     '5555555555',
-    '1 555 555 5555'
+    '1 555 555 5555',
+    '800-692-7753',
+    '8oo-six427676;laskdjf'
 ];
-
-console.log(telephonCheck(testData[0]));
+for (const item of testData) {
+    console.log(item, telephoneCheck(item)); //);
+}
+// console.log(telephoneCheck(testData[]));
