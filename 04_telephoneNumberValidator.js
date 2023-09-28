@@ -28,4 +28,15 @@ function telephonCheck(str) {
     return true;
 }
 
-telephonCheck("555-555-5555")
+// telephonCheck("555-555-5555")
+
+const testData = [
+    '555-555-5555',
+    '(555)555-5555',
+    '(555) 555-5555',
+    '555 555 5555',
+    '5555555555',
+    '1 555 555 5555'
+];
+
+console.log(telephonCheck(testData[0]));
