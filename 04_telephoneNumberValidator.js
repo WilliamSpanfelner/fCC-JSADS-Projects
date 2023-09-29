@@ -28,12 +28,12 @@ function telephoneCheck(str) {
     // Define regex - 
     // const regex = /\d{10}/;  // matches strings 10 digits in length
     // const regex = /\d{3}(\s|\-)\d{3}\1\d{4}/; // matches strings with 2 groups of 3 digits and a space or hyphen and a final 4 digits
+    // const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/;
+    // const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
+    // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
     
     // Combining the above regexes with the or operator gets more matches
-    // const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/; 
-    
-    // const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
-    const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
+    const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/;
     
     console.log(str.match(regex));
 
@@ -51,6 +51,9 @@ const testData = [
     '555 555 5555',
     '5555555555',
     '1 555 555 5555',
+    '1 (555) 555-5555',
+    '1(555)555-5555',
+    "27576227382",
     '8oo-six427676;laskdjf'
 ];
 let matchCount = 0;
