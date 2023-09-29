@@ -31,13 +31,14 @@ function telephoneCheck(str) {
     // const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/;
     // const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
-    
-    const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/; // match only 10-digits strings when there is a leading 1 
+    // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/; // match only 10-digits strings when there is a leading 1 
+
+    const regex = /^1(\s)\d{3}\1\d{3}\1\d{4}$/g;  // match leading 1 with spaces delimiting
 
     // Combining the above regexes with the or operator gets more matches
-    // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/;
+    // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/;
     
-    // console.log(str.match(regex));
+    console.log(str.match(regex));
 
     // return test boolean
     return regex.test(str);
@@ -45,23 +46,23 @@ function telephoneCheck(str) {
 
 // telephonCheck("555-555-5555")
 
-const testData = [
+const testData = [    
+    '1 555 555 5555',
+    '1 (555) 555-5555',
+    '1(555)555-5555',
     '800-692-7753',
     '555-555-5555',
     '(555)555-5555',
     '(555) 555-5555',
     '555 555 5555',
     '5555555555',
-    '1 555 555 5555',
-    '1 (555) 555-5555',
-    '1(555)555-5555',
     "27576227382",
     '8oo-six427676;laskdjf'
 ];
 let matchCount = 0;
 for (const item of testData) {
     let returnedBool = telephoneCheck(item)
-    if (!returnedBool) {
+    if (returnedBool) {
         console.log(item, returnedBool);
     }
     
