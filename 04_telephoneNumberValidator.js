@@ -26,16 +26,18 @@ string is a valid US phone number; otherwise return false.
 
 function telephoneCheck(str) {
     // Define regex - 
-    // const regex = /\d{10}/;  // matches strings 10 digits in length
+    // const regex = /\d{10}/;  // matches a group of 10 digits in a string
     // const regex = /\d{3}(\s|\-)\d{3}\1\d{4}/; // matches strings with 2 groups of 3 digits and a space or hyphen and a final 4 digits
     // const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/;
     // const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
     
+    const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/; // match only 10-digits strings when there is a leading 1 
+
     // Combining the above regexes with the or operator gets more matches
-    const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/;
+    // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/;
     
-    console.log(str.match(regex));
+    // console.log(str.match(regex));
 
     // return test boolean
     return regex.test(str);
@@ -59,7 +61,10 @@ const testData = [
 let matchCount = 0;
 for (const item of testData) {
     let returnedBool = telephoneCheck(item)
-    console.log(item, returnedBool);
+    if (!returnedBool) {
+        console.log(item, returnedBool);
+    }
+    
     if (returnedBool) {
         matchCount++;
     }
