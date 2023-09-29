@@ -32,16 +32,18 @@ function telephoneCheck(str) {
     // const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/; // match only 10-digits strings when there is a leading 1 
-
     // const regex = /^1(\s)\d{3}\1\d{3}\1\d{4}$/g;  // match leading 1 with spaces delimiting
     // const regex = /^1(\s)\(\d{3}\)\1\d{3}\-\d{4}$/g;  // match parentheses around first 3-digit group and a hyphen separating final groups
     // const regex = /^1\(\d{3}\)\d{3}\-\d{4}$/g;  // match leading 1 with parentheses around first 3-digits succeeding 1 and a hyphen separating final groups
 
-    const regex = /^1(\s?)\(?\d{3}\)?\1\d{3}(\1|\-)\d{4}$/g;  // match above 3 patterns
+    // const regex = /^1?(\s?)\(?\d{3}\)?\1\d{3}(\1|\-)\d{4}$/g;  // match above 3 patterns
 
-    // Combining the above regexes with the or operator gets more matches
-    // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/;
+    // const regex = /^(1|\d{3}|\(\d{3}\))\s?-?(\d{3}|\(\d{3}\))(\s\d{3}|\d{3}|-|\s)(\d{4})$/g;
     
+    // Combining the above regexes with the or operator gets more matches
+    // const regex = /^1?(\s?)\(?\d{3}\)?\1\d{3}(\1|-)\d{4}$|^\(\d{3}\)\s?\d{3}-\d{4}|^(1\s)?\d{3}(\s?-?)\d{3}\2\d{4}$|^1?(\s?)\(?\d{3}\)?\1\d{3}(\1|-)\d{4}$/g;
+    
+    const regex = /^(1\s\d{3}|1\s\(\d{3}|1\(\d{3}|\(\d{3}|\d{3})(\)\s|\)|\s|-)?\d{3}(\s|-)?\d{4}$/g;  // Constructing the regex from rtl
     console.log(str.match(regex));
 
     // return test boolean
@@ -51,6 +53,8 @@ function telephoneCheck(str) {
 // telephonCheck("555-555-5555")
 
 const testData = [    
+    '1 555)555-5555',
+    '(555-555-5555',
     '1 555 555 5555',
     '1 (555) 555-5555',
     '1(555)555-5555',
@@ -75,4 +79,4 @@ for (const item of testData) {
     }
 }
 console.log(matchCount, testData.length, matchCount / testData.length * 100);
-// console.log(telephoneCheck(testData[1]));
+// console.log(telephoneCheck(testData[6]));
