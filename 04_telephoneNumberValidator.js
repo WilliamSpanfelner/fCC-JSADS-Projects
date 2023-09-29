@@ -44,10 +44,13 @@ function telephoneCheck(str) {
     // const regex = /^1?(\s?)\(?\d{3}\)?\1\d{3}(\1|-)\d{4}$|^\(\d{3}\)\s?\d{3}-\d{4}|^(1\s)?\d{3}(\s?-?)\d{3}\2\d{4}$|^1?(\s?)\(?\d{3}\)?\1\d{3}(\1|-)\d{4}$/g;
     
     const regex = /^(1\s\d{3}|1\s\(\d{3}|1\(\d{3}|\(\d{3}|\d{3})(\)\s|\)|\s|-)?\d{3}(\s|-)?\d{4}$/g;  // Constructing the regex from rtl
-    console.log(str.match(regex));
 
-    // return test boolean
-    return regex.test(str);
+    if (str.includes('(') && str.includes(')') || !str.includes('(') && !str.includes(')')) {
+        // return test boolean
+        console.log(str.match(regex));
+        return regex.test(str); 
+    }
+    return false;
 }
 
 // telephonCheck("555-555-5555")
@@ -79,4 +82,4 @@ for (const item of testData) {
     }
 }
 console.log(matchCount, testData.length, matchCount / testData.length * 100);
-// console.log(telephoneCheck(testData[6]));
+// console.log(telephoneCheck(testData[1]));
