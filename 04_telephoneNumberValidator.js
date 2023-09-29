@@ -32,7 +32,8 @@ function telephoneCheck(str) {
     // Combining the above regexes with the or operator gets more matches
     // const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/; 
     
-    const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
+    // const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
+    const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
     
     console.log(str.match(regex));
 
