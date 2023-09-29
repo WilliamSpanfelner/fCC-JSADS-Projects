@@ -33,7 +33,9 @@ function telephoneCheck(str) {
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}/; // match parentheses around leading 3 digits
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/; // match only 10-digits strings when there is a leading 1 
 
-    const regex = /^1(\s)\d{3}\1\d{3}\1\d{4}$/g;  // match leading 1 with spaces delimiting
+    // const regex = /^1(\s)\d{3}\1\d{3}\1\d{4}$/g;  // match leading 1 with spaces delimiting
+    const regex = /^1(\s)\(\d{3}\)\1\d{3}\-\d{4}$/g;  // match parentheses around first 3-digit group and a hyphen separating final groups
+
 
     // Combining the above regexes with the or operator gets more matches
     // const regex = /^\(\d{3}\)\s?\d{3}\-\d{4}|^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}$/;
