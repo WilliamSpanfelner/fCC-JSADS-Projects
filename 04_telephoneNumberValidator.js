@@ -30,8 +30,9 @@ function telephoneCheck(str) {
     // const regex = /\d{3}(\s|\-)\d{3}\1\d{4}/; // matches strings with 2 groups of 3 digits and a space or hyphen and a final 4 digits
     
     // Combining the above regexes with the or operator gets more matches
-    const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/; 
-
+    // const regex = /\d{10}|\d{3}(\s|\-)\d{3}\1\d{4}/; 
+    
+    const regex = /^(1\s)?\d{3}(\s?\-?)\d{3}\2\d{4}/; // match a leading 1 for the country code
     
     console.log(str.match(regex));
 
@@ -59,5 +60,5 @@ for (const item of testData) {
         matchCount++;
     }
 }
-console.log(matchCount, testData.length, matchCount / testData.length);
+console.log(matchCount, testData.length, matchCount / testData.length * 100);
 // console.log(telephoneCheck(testData[1]));
