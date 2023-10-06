@@ -44,14 +44,22 @@ See below for an example of a cash-in-drawer array:
   ["TWENTY", 60],
   ["ONE HUNDRED", 100]
 ]
+*/
 
 function checkCashRegister(price, cash, cid) {
-  let change;
+  let change = cash - price;
+
   return change;
 }
 
-checkCashRegister(19.5, 20, [
-  ["PENNY", 1.01], ["NICKEL", 2.05], 
-  ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], 
-  ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]
-]);
+const testData = [
+    [  19.5, 20, 
+      [["PENNY", 1.01], ["NICKEL", 2.05],
+        ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55],
+        ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
+    ],
+];
+
+checkCashRegister(testData[0][0], testData[0][1], testData[0][2]);
+
+// {status: "OPEN", change: [["QUARTER", 0.5]]}
