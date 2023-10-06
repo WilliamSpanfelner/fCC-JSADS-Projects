@@ -59,7 +59,26 @@ function checkCashRegister(price, cash, cid) {
 
   let balance = change;
   let makeChange = [];
-  
+
+  for (let i = 0; i < coins.length; i++) {
+    const coin = coins[i];
+    const coinName = coin[0];
+    const coinValue = coin[1];
+    
+    let coinCount = 0;
+    while (balance > coinValue) {
+      balance -= coinValue;
+      coinCount += 1;
+    }
+    if (balance == coinValue) {
+        balance -= coinValue;
+        coinCount += 1;
+    }
+    if (coinValue * coinCount > 0) {
+      makeChange.push([coinName, coinValue * coinCount]);
+    }
+  }
+
   return change;
 }
 
