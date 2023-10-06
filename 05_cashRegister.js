@@ -49,6 +49,14 @@ See below for an example of a cash-in-drawer array:
 function checkCashRegister(price, cash, cid) {
   let change = cash - price;
 
+  // determine how to give change
+  // what is the largest coin that divides into change?
+  let coins = {
+    "PENNY": 0.01,
+    "NICKEL": 0.05,
+    "DIME": 0.10,
+    "QUARTER": 0.25,
+  };
   return change;
 }
 
