@@ -57,6 +57,9 @@ function checkCashRegister(price, cash, cid) {
     ["PENNY", 0.01]
   ];
 
+  let balance = change;
+  let makeChange = [];
+  
   return change;
 }
 
