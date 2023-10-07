@@ -45,6 +45,16 @@ See below for an example of a cash-in-drawer array:
   ["ONE HUNDRED", 100]
 ]
 */
+function hasFunds(coinName, value, cid) {
+  for (let i = 0; i < cid.length; i++) {
+    const element = cid[i];
+    if (element[0] == coinName && element[1] >= value) {
+      console.log(element[0], element[1]);
+      return true;
+    }
+  }
+  return false;
+}
 
 function checkCashRegister(price, cash, cid) {
   let change = cash - price;
@@ -66,6 +76,7 @@ function checkCashRegister(price, cash, cid) {
     const coinValue = coin[1];
     
     let coinCount = 0;
+    console.log(hasFunds(coinName, balance, cid));
     while (balance > coinValue) {
       balance -= coinValue;
       coinCount += 1;
