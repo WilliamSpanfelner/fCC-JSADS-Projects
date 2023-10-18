@@ -1,4 +1,3 @@
-
 /**
  * A palindrome is a word or sentance that's spelled the same way both 
  * forward and backward, ignoring punctuation, case and spacing.
@@ -7,11 +6,11 @@
  */
 function palindrome(str) {
     // save original str
-    const refString = str;    
-    // change case to lower
-    const stringInLowerCase = refString.toLowerCase();
+    // const refString = str;    // This line not required since the following line performs the operation and returns a new string.
+    // change case to lower & preserve original str.
+    const lowerCaseString = str.toLowerCase();
     // remove white space
-    const stringWithNoWhiteSpace = stringInLowerCase.split(/\s/).join('');
+    const stringWithNoWhiteSpace = lowerCaseString.split(/\s/).join('');
     // remove punctuation
     // const alphanumerics = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
     //                         'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
