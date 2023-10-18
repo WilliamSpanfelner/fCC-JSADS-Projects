@@ -8,7 +8,9 @@ function palindrome(str) {
     // save original str
     // const refString = str;    // This line not required since the following line performs the operation and returns a new string.
     // change case to lower & preserve original str.
-    const lowerCaseString = str.toLowerCase();
+
+    // const lowerCaseString = str.toLowerCase();
+    
     // remove white space
     
     // const stringWithNoWhiteSpace = lowerCaseString.split(/\s/).join('');
@@ -34,12 +36,13 @@ function palindrome(str) {
     //     }
     // }
 
-    const cleanString = lowerCaseString
-    .split(/\s/)
-    .filter(element => element != '')
-    .join('');
+    const cleanString = str
+    .split(/\s*/)
+    .filter(element => element.match(/[a-z0-9]/i))
+    .join('')
+    .toLowerCase();
 
-    console.log(cleanString);
+    // console.log("cleanString: " + cleanString, "\nstr: " + str, /*str.split(''),*/ str.split(/\s*/), str.split(/\s*/).filter(element => element.match(/[a-z0-9]/i)));
     
     // Another way of writing the conditional to acheive same result
     // for (const letter of stringWithNoWhiteSpace) {
@@ -72,6 +75,8 @@ function palindrome(str) {
 const palindromes = [
     "Fred",
     "hello",
+    "A man, a plan, a canal. Panama",
+    "_eye",
     "E Y  E",
     "eye",
     "EYE",
