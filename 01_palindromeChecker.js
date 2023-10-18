@@ -5,51 +5,11 @@
  * @returns true if a given string is a palindrome or false otherwise
  */
 function palindrome(str) {
-    // save original str
-    // const refString = str;    // This line not required since the following line performs the operation and returns a new string.
-    // change case to lower & preserve original str.
-
-    // const lowerCaseString = str.toLowerCase();
-    
-    // remove white space
-    
-    // const stringWithNoWhiteSpace = lowerCaseString.split(/\s/).join('');
-
-    // remove punctuation
-    // const alphanumerics = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
-    //                         'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
-    //                         'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', 
-    //                         '4', '5', '6', '7', '8', '9'];
-    // const regex = /[a-z0-9]/;
-    // let cleanString = '';
-
-    // for (const letter of stringWithNoWhiteSpace) {
-    //     if (alphanumerics.includes(letter)) {
-    //         cleanString += letter;
-    //     }
-    // }
-
-    // Using regex to get the same result as above
-    // for (const letter of stringWithNoWhiteSpace) {
-    //     if (regex.test(letter)) {
-    //         cleanString += letter
-    //     }
-    // }
-
     const cleanString = str
     .split(/\s*/)
     .filter(element => element.match(/[a-z0-9]/i))
     .join('')
     .toLowerCase();
-
-    // console.log("cleanString: " + cleanString, "\nstr: " + str, /*str.split(''),*/ str.split(/\s*/), str.split(/\s*/).filter(element => element.match(/[a-z0-9]/i)));
-    
-    // Another way of writing the conditional to acheive same result
-    // for (const letter of stringWithNoWhiteSpace) {
-    //     if (alphanumerics.indexOf(letter) > -1) {
-    //         cleanString += letter;
-    //     }
-    // }
 
     // testString = "12345"
     function reverseString(n) {
@@ -61,14 +21,9 @@ function palindrome(str) {
             return charArray;
         }
     }
-
-    // reverse cleanString
-    // reversedString = reverseString(testString.length - 1).join("");
+    
     const reversedString = reverseString(cleanString.length - 1).join("");
-    // console.log(reverseString(testString.length - 1).join(""));
-
-    // compare with reference string
-    // console.log(refString, stringInLowerCase, stringWithNoWhiteSpace, cleanString, reversedString);
+    
     return cleanString == reversedString;
 }
 
@@ -92,8 +47,8 @@ const palindromes = [
 //     console.log(i, palindromes[i], palindrome(palindromes[i]));
 // }
 // Another more readable way of writing the above for-loop
-// for (const word in palindromes) {
-//     console.log(word, palindromes[word], palindrome(palindromes[word]));
-// }
+for (const word in palindromes) {
+    console.log(word, palindromes[word], palindrome(palindromes[word]));
+}
 
-console.log(palindromes[2], palindrome(palindromes[2]));
+// console.log(palindromes[2], palindrome(palindromes[2]));
