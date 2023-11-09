@@ -34,23 +34,16 @@ function convertToRoman(num) {
 
     // 8. Repeat procedure until balance is reduced to zero
     while (balance > 0) {
-        // 4. Store the largest object property compared to balance
-        // let arabicKeys = [];
-        // 5. Iterate through the romanNumerals object to find largest keys.
-        // for (const arabicNum in romanNumerals) {
-        //     if (arabicNum <= balance) {
-        //         // console.log("arabicNum = ", arabicNum);
-        //         arabicKeys.push(arabicNum);
-        //     }
-        // }
-    
-        const arabicKeys = Object.keys(romanNumerals).filter(element => element <= balance);
-        // console.log(arabicKeys);
+
+        // 4. Store the object properties smaller than the balance
+        const arabicKeys = Object.keys(romanNumerals)
+        .filter(element => element <= balance);
+
+        // 5. Find largest key.
+        let largestArabicValue = Math.max(...arabicKeys);
 
         // 6. Update romanNumeral
-        let largestArabicValue = Math.max(...arabicKeys);
         romanNumeral += romanNumerals[largestArabicValue];
-        // console.log(largestArabicKeys, largestArabicValue);
     
         // 7. Update balance
         balance -= largestArabicValue;
