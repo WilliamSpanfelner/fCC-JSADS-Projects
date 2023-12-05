@@ -75,7 +75,6 @@ function checkCashRegister(price, cash, cid) {
 
   function addDenominationsTo(cid) {
     // Append the denomination value to each cid element
-    // let cidd = 
     return cid.reduce((arr, element) => {
       arr.push(element);
       switch (element[0]) {        
@@ -110,7 +109,7 @@ function checkCashRegister(price, cash, cid) {
           break;
       }
       return arr;
-    }, []);;
+    }, []);
   }
 
   // Calculate changeDue and limit result to two decimal places.
