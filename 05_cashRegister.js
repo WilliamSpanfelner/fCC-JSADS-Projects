@@ -127,12 +127,17 @@ function checkCashRegister(price, cash, cid) {
   let makeChange = [];
 
   // Get the relevant denominations from cid
-  let makeChangeFrom = addDenominationsTo(cid).filter(element => element[2] <= balance * 100)
+  let availableChange = addDenominationsTo(cid).filter(element => element[2] <= balance * 100)
   .sort(function(a, b){return b[2] - a[2]});  // sort descending by the denomination value
-  makeChangeFrom.forEach(element => {
+  availableChange.forEach(element => {
     console.log(element);
   });
 
+  // Get the value of the change available
+  const valueAvailableChange = availableChange.reduce((sum, element) => sum += element[1], 0);
+  console.log(valueAvailableChange);
+  
+  
   // for (let i = 0; i < coins.length; i++) {
   //   const coin = coins[i];
   //   const coinName = coin[0];
