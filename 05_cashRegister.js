@@ -72,6 +72,7 @@ function hasFunds(coinName, coinValue, cid) {
 }
 
 function checkCashRegister(price, cash, cid) {
+  let canReturnExactChange = false;
 
   function addDenominationsTo(cid) {
     // Append the denomination value to each cid element
@@ -137,6 +138,10 @@ function checkCashRegister(price, cash, cid) {
   const valueAvailableChange = availableChange.reduce((sum, element) => sum += element[1], 0);
   console.log(valueAvailableChange);
   
+  if (valueAvailableChange >= balance) {
+    canReturnExactChange = true;
+  }
+
   
   // for (let i = 0; i < coins.length; i++) {
   //   const coin = coins[i];
