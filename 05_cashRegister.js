@@ -72,7 +72,46 @@ function hasFunds(coinName, coinValue, cid) {
 }
 
 function checkCashRegister(price, cash, cid) {
-  console.log(typeof(price), typeof(cash), typeof(cid));
+
+  function addDenominationsTo(cid) {
+    // Append the denomination value to each cid element
+    // let cidd = 
+    return cid.reduce((arr, element) => {
+      arr.push(element);
+      switch (element[0]) {        
+        case "ONE HUNDRED":
+          arr[arr.length - 1].push(10000);
+          break;        
+        case "TWENTY":
+          arr[arr.length - 1].push(2000);
+          break;        
+        case "TEN":
+          arr[arr.length - 1].push(1000);
+          break;        
+        case "FIVE":
+          arr[arr.length - 1].push(500);
+          break;                
+        case "ONE":
+          arr[arr.length - 1].push(100);
+          break;        
+        case "QUARTER":
+          arr[arr.length - 1].push(25);
+          break;
+        case "DIME":
+          arr[arr.length - 1].push(10);
+          break;
+        case "NICKEL":
+          arr[arr.length - 1].push(5);
+          break;
+        case "PENNY":
+          arr[arr.length - 1].push(1);
+          break;
+        default:
+          break;
+      }
+      return arr;
+    }, []);;
+  }
 
   // Calculate changeDue and limit result to two decimal places.
   let changeDue = (cash - price);
@@ -88,6 +127,7 @@ function checkCashRegister(price, cash, cid) {
   let balance = changeDue;
   let makeChange = [];
 
+  console.log(addDenominationsTo(cid));
   // for (let i = 0; i < coins.length; i++) {
   //   const coin = coins[i];
   //   const coinName = coin[0];
