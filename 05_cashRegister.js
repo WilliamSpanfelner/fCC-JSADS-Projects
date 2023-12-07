@@ -47,8 +47,12 @@ See below for an example of a cash-in-drawer array:
 */
 
 function checkCashRegister(price, cash, cid) {
-  let canReturnExactChange = false;
-
+  /**
+   * Append a denomination value based on smallest currency unit
+   * (one cent) to each element of the cid array
+   * @param {*} cid 
+   * @returns the cid array with denomination values
+   */
   function addDenominationsTo(cid) {
     // Append the denomination value to each cid element
     return cid.reduce((arr, element) => {
@@ -87,6 +91,42 @@ function checkCashRegister(price, cash, cid) {
       return arr;
     }, []);
   }
+  
+  /**
+   * Create an array with change denominations to issue
+   * from the availableChange array
+   * @param {*} availableChange 
+   */
+  function makeChangeFrom(availableChange) {
+    for (let index = 0; index < availableChange.length; index++) {
+      const element = availableChange[index];
+      // if the denomination available <= balance give the value available
+      balance = Number(balance.toFixed(2));
+
+      if (balance == 0) {
+        break;
+      } else {
+        // How many coins/notes of the given denomination are required?
+        const denomUnitsReqd = Math.floor(balance * 100 / element[2]);
+        // What is the denomination value of the units reqd?
+        const denomValue = denomUnitsReqd * element[2] / 100;
+        // How many coins/notes are available?
+        const denomUnitsAvail = Math.floor(element[1] * 100 / element[2]);
+
+        if (denomUnitsReqd > 0) {
+          if (denomUnitsReqd <= denomUnitsAvail) { // if coins/notes <= those on hand
+            makeChange.push([element[0], denomValue]);
+            balance -= denomValue;
+            element[1] -= denomValue;
+          } else if (element[1] > 0) {  // otherwise use remaining coins/notes and move on
+            makeChange.push([element[0], element[1]]);
+            balance -= element[1];
+            element[1] -= element[1];
+          }
+        }
+      };
+    }
+  }
 
   // Calculate changeDue and limit result to two decimal places.
   let changeDue = (cash - price);
@@ -105,45 +145,15 @@ function checkCashRegister(price, cash, cid) {
   // Get the value of the change available
   const valueAvailableChange = availableChange.reduce((sum, element) => sum += element[1], 0);
 
-  if (valueAvailableChange >= balance) {
-    canReturnExactChange = true;
-  }
+  // Make change if sufficient change exists
+  const canReturnExactChange = valueAvailableChange >= balance;
 
-
-  for (let index = 0; index < availableChange.length; index++) {
-    const element = availableChange[index];
-    // if the denomination available <= balance give the value available
-    balance = Number(balance.toFixed(2));
-
-    if (balance == 0) {
-      break;
-    } else {
-      // How many coins/notes of the given denomination are required?
-      const denomUnitsReqd = Math.floor(balance * 100 / element[2]);
-      // What is the denomination value of the units reqd?
-      const denomValue = denomUnitsReqd * element[2] / 100;
-      // How many coins/notes are available?
-      const denomUnitsAvail = Math.floor(element[1] * 100 / element[2]);
-
-      if (denomUnitsReqd > 0) {
-        if (denomUnitsReqd <= denomUnitsAvail) { // if coins/notes <= those on hand
-          makeChange.push([element[0], denomValue]);
-          balance -= denomValue;
-          element[1] -= denomValue;
-        } else if (element[1] > 0) {  // otherwise use remaining coins/notes and move on
-          makeChange.push([element[0], element[1]]);
-          balance -= element[1];
-          element[1] -= element[1];
-        }
-      }
-    };
-  }
-
-  if (drawerValue < changeDue || !canReturnExactChange) {
+  if (!canReturnExactChange) {
     return { status: "INSUFFICIENT_FUNDS", change: [] }
   } else if (drawerValue == changeDue) {
     return { status: "CLOSED", change: [...cid] }
   }
+  makeChangeFrom(availableChange);
   return { "status": "OPEN", "change": [...makeChange] };
 }
 
