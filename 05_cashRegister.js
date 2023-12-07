@@ -120,8 +120,8 @@ function checkCashRegister(price, cash, cid) {
   "\nchangeDue: ", changeDue.toFixed(2));
 
   // Get the total value of cid
-  const drawerValue = cid.reduce((sum, element) => sum += element[1], 0);
-  console.log("\ndrawerValue: ", drawerValue.toFixed(2));
+  const drawerValue = Number(cid.reduce((sum, element) => sum += element[1], 0).toFixed(2));
+  console.log("\ndrawerValue: ", drawerValue);
 
   // determine how to give change
   let balance = changeDue;
@@ -130,9 +130,9 @@ function checkCashRegister(price, cash, cid) {
   // Get the relevant denominations from cid
   let availableChange = addDenominationsTo(cid).filter(element => element[2] <= balance * 100)
   .sort(function(a, b){return b[2] - a[2]});  // sort descending by the denomination value
-  availableChange.forEach(element => {
-    console.log(element);
-  });
+  // availableChange.forEach(element => {
+  //   console.log(element);
+  // });
 
   // Get the value of the change available
   const valueAvailableChange = availableChange.reduce((sum, element) => sum += element[1], 0);
@@ -142,47 +142,89 @@ function checkCashRegister(price, cash, cid) {
     canReturnExactChange = true;
   }
 
-  
-  // for (let i = 0; i < coins.length; i++) {
-  //   const coin = coins[i];
-  //   const coinName = coin[0];
-  //   const coinValue = coin[1];
-    
-  //   let coinCount = 0;
-  //   console.log("Balance is: " + balance);
-  //   while (balance >= coinValue && hasFunds(coinName, coinValue, cid)) {
-  //     balance -= coinValue.toFixed(2);
-  //     deductFunds(coinName, coinValue, cid)
-  //     coinCount += 1;
-          
-  //     if (balance.toFixed(2) == coinValue && hasFunds(coinName, coinValue, cid)) {
-  //       balance -= coinValue.toFixed(2);
-  //       deductFunds(coinName, coinValue, cid)
-  //       coinCount += 1;
-  //     }
-  //   }
 
-  //   if (coinValue * coinCount > 0) {
-  //     makeChange.push([coinName, coinValue * coinCount]);
-  //   }
-  // }
+  for (let index = 0; index < availableChange.length; index++) {
+    const element = availableChange[index];
+    // if the denomination available <= balance give the value available
+    balance = Number(balance.toFixed(2));
+    console.log("balance: ", balance);
+    if (balance == 0) {
+      break;
+    } else {
+      // How many coins/notes of the given denomination are required?
+      const denomUnitsReqd = Math.floor(balance * 100 / element[2]);
+      // What is the denomination value of the units reqd?
+      const denomValue = denomUnitsReqd * element[2] / 100;
+      // How many coins/notes are available?
+      const denomUnitsAvail = Math.floor(element[1] * 100 / element[2]);
+
+      console.log("denomUnitsReqd: ", denomUnitsReqd,  "\ndenomValue: ", denomValue, "\ndenomUnitsAvail: ", denomUnitsAvail + element[0]);
+      if (denomUnitsReqd > 0) {
+        if (denomUnitsReqd <= denomUnitsAvail) { // if coins/notes <= those on hand
+          makeChange.push([element[0], denomValue]);
+          balance -= denomValue;
+          element[1] -= denomValue;
+        } else if (element[1] > 0) {  // otherwise use remaining coins/notes and move on
+          makeChange.push([element[0], element[1]]);
+          balance -= element[1];
+          element[1] -= element[1];
+        }
+      }
+    };
+  }
+
+  console.log("makeChange: ", makeChange);
+  console.log("availableChange: ", availableChange);
+
 
   for (const denomination of makeChange) {
     console.log(denomination);
   }  
   
-  if (cid < changeDue || !canReturnExactChange) {
+  if (drawerValue < changeDue || !canReturnExactChange) {
     return {status: "INSUFFICIENT_FUNDS", change: []}
-  } else if (cid == changeDue) {
-    return {status: "CLOSED", change: [...cid]}
+  } else if (drawerValue == changeDue) {
+    return {status: "CLOSED", change: [...makeChange]}
   }
-  return {"status": "OPEN", "change": [...cid]};
+  return {"status": "OPEN", "change": [...makeChange]};
 }
 
 const testData = [
+  [  19.50, 20, [
+    ["PENNY", 0.5], ["NICKEL", 0],
+    ["DIME", 0], ["QUARTER", 0],
+    ["ONE", 0], ["FIVE", 0],
+    ["TEN", 0], ["TWENTY", 0], 
+    ["ONE HUNDRED", 0]
+    ]
+  ],
+  [  19.50, 20, [
+    ["PENNY", 0.01], ["NICKEL", 0],
+    ["DIME", 0], ["QUARTER", 0],
+    ["ONE", 1], ["FIVE", 0],
+    ["TEN", 0], ["TWENTY", 0], 
+    ["ONE HUNDRED", 0]
+    ]
+  ],
+  [  19.50, 20, [
+    ["PENNY", 0.01], ["NICKEL", 0],
+    ["DIME", 0], ["QUARTER", 0],
+    ["ONE", 0], ["FIVE", 0],
+    ["TEN", 0], ["TWENTY", 0], 
+    ["ONE HUNDRED", 0]
+    ]
+  ],
+  [  3.26, 100, [
+      ["PENNY", 1.01], ["NICKEL", 2.05],
+      ["DIME", 3.1], ["QUARTER", 4.25],
+      ["ONE", 90], ["FIVE", 55],
+      ["TEN", 20], ["TWENTY", 60], 
+      ["ONE HUNDRED", 100]
+    ]
+    ],
     [  19.5, 20, [
       ["PENNY", 1.01], ["NICKEL", 2.05],
-      ["DIME", 3.1], ["QUARTER", 0.25],
+      ["DIME", 3.1], ["QUARTER", 4.25],
       ["ONE", 90], ["FIVE", 55],
       ["TEN", 20], ["TWENTY", 60], 
       ["ONE HUNDRED", 100]
