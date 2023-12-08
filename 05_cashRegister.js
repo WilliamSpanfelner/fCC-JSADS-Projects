@@ -92,9 +92,15 @@ function checkCashRegister(price, cash, cid) {
     }, []);
   }
   
+  /**
+   * Remove the demonination value element from each cid element
+   * @param {*} array 
+   * @returns 
+   */
   function removeDenominationsFrom(array) {
-    
+     return array.map(element => element.slice(0, 2));
   }
+
   /**
    * Create an array with change denominations to issue
    * from the availableChange array
@@ -153,6 +159,7 @@ function checkCashRegister(price, cash, cid) {
   if (!canReturnExactChange) {
     return { status: "INSUFFICIENT_FUNDS", change: [] }
   } else if (drawerValue == balance) {
+    cid = [...removeDenominationsFrom(cid)];
     return { status: "CLOSED", change: [...cid] }
   }
   makeChangeFrom(availableChange);
@@ -202,12 +209,11 @@ const testData = [
   ],
 ];
 
-console.log(checkCashRegister(testData[0][0], testData[0][1], testData[0][2]).change.forEach(element => {
-  console.log(element)} ));
-// testData.forEach(element => {
-//   console.log(checkCashRegister(element[0], element[1], element[2]).change.forEach(element => {
-//     console.log(element)} ));
-// });
+// console.log(checkCashRegister(testData[0][0], testData[0][1], testData[0][2]).change.forEach(element => {
+  // console.log(element)} ));
+testData.forEach(element => {
+  console.log(checkCashRegister(element[0], element[1], element[2]));
+});
 
 
 // {status: "OPEN", change: [["QUARTER", 0.5]]}
