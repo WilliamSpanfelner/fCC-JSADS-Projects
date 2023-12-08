@@ -50,12 +50,12 @@ function checkCashRegister(price, cash, cid) {
   /**
    * Append a denomination value based on smallest currency unit
    * (one cent) to each element of the cid array
-   * @param {*} cid 
+   * @param {*} array 
    * @returns the cid array with denomination values
    */
-  function addDenominationsTo(cid) {
+  function addDenominationsTo(array) {
     // Append the denomination value to each cid element
-    return cid.reduce((arr, element) => {
+    return array.reduce((arr, element) => {
       arr.push(element);
       switch (element[0]) {
         case "ONE HUNDRED":
@@ -92,6 +92,9 @@ function checkCashRegister(price, cash, cid) {
     }, []);
   }
   
+  function removeDenominationsFrom(array) {
+    
+  }
   /**
    * Create an array with change denominations to issue
    * from the availableChange array
@@ -128,18 +131,17 @@ function checkCashRegister(price, cash, cid) {
     }
   }
 
-  // Calculate changeDue and limit result to two decimal places.
-  let changeDue = (cash - price);
+  // Calculate balance.
+  let balance = cash - price;
 
   // Get the total value of cid
   const drawerValue = Number(cid.reduce((sum, element) => sum += element[1], 0).toFixed(2));
 
-  // determine how to give change
-  let balance = changeDue;
+  // Create array from which to issue change 
   let makeChange = [];
 
   // Get the relevant denominations from cid
-  let availableChange = addDenominationsTo(cid).filter(element => element[2] <= balance * 100)
+  const availableChange = addDenominationsTo(cid).filter(element => element[2] <= balance * 100)
     .sort(function (a, b) { return b[2] - a[2] });  // sort descending by the denomination value
 
   // Get the value of the change available
@@ -150,11 +152,11 @@ function checkCashRegister(price, cash, cid) {
 
   if (!canReturnExactChange) {
     return { status: "INSUFFICIENT_FUNDS", change: [] }
-  } else if (drawerValue == changeDue) {
+  } else if (drawerValue == balance) {
     return { status: "CLOSED", change: [...cid] }
   }
   makeChangeFrom(availableChange);
-  return { "status": "OPEN", "change": [...makeChange] };
+  return { status: "OPEN", change: [...makeChange] };
 }
 
 const testData = [
@@ -200,9 +202,12 @@ const testData = [
   ],
 ];
 
-testData.forEach(element => {
-  console.log(checkCashRegister(element[0], element[1], element[2]));
-});
+console.log(checkCashRegister(testData[0][0], testData[0][1], testData[0][2]).change.forEach(element => {
+  console.log(element)} ));
+// testData.forEach(element => {
+//   console.log(checkCashRegister(element[0], element[1], element[2]).change.forEach(element => {
+//     console.log(element)} ));
+// });
 
 
 // {status: "OPEN", change: [["QUARTER", 0.5]]}
