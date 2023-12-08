@@ -82,23 +82,15 @@ function checkCashRegister(price, cash, cid) {
         case "NICKEL":
           arr[arr.length - 1].push(5);
           break;
-        case "PENNY":
-          arr[arr.length - 1].push(1);
-          break;
+        // case "PENNY":
+          
+        //   break;
         default:
+          arr[arr.length - 1].push(1);
           break;
       }
       return arr;
     }, []);
-  }
-  
-  /**
-   * Remove the demonination value element from each cid element
-   * @param {*} array 
-   * @returns 
-   */
-  function removeDenominationsFrom(array) {
-     return array.map(element => element.slice(0, 2));
   }
 
   /**
@@ -139,27 +131,26 @@ function checkCashRegister(price, cash, cid) {
 
   // Calculate balance.
   let balance = cash - price;
-
-  // Get the total value of cid
-  const drawerValue = Number(cid.reduce((sum, element) => sum += element[1], 0).toFixed(2));
+  const cashInDrawer = JSON.parse(JSON.stringify(cid));  // Create a deep copy of cid since cid is multidimensional 
 
   // Create array from which to issue change 
   let makeChange = [];
 
   // Get the relevant denominations from cid
-  const availableChange = addDenominationsTo(cid).filter(element => element[2] <= balance * 100)
-    .sort(function (a, b) { return b[2] - a[2] });  // sort descending by the denomination value
+  const availableChange = addDenominationsTo(cashInDrawer)
+  .filter(element => element[2] <= balance * 100)
+  .sort(function (a, b) { return b[2] - a[2] });  // sort descending by the denomination value
 
   // Get the value of the change available
-  const valueAvailableChange = availableChange.reduce((sum, element) => sum += element[1], 0);
+  const valueAvailableChange = availableChange
+  .reduce((sum, element) => sum += element[1], 0);
 
   // Make change if sufficient change exists
   const canReturnExactChange = valueAvailableChange >= balance;
 
   if (!canReturnExactChange) {
     return { status: "INSUFFICIENT_FUNDS", change: [] }
-  } else if (drawerValue == balance) {
-    cid = [...removeDenominationsFrom(cid)];
+  } else if (valueAvailableChange == balance) {
     return { status: "CLOSED", change: [...cid] }
   }
   makeChangeFrom(availableChange);
